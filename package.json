@@ -1,5 +1,5 @@
 {
-  "name": "ng-complete-guide-update",
+  "name": "recipee-shopping-app",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -11,26 +11,26 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^8.0.0",
-    "@angular/common": "^8.0.0",
-    "@angular/compiler": "^8.0.0",
-    "@angular/core": "^8.0.0",
-    "@angular/forms": "^8.0.0",
-    "@angular/platform-browser": "^8.0.0",
-    "@angular/platform-browser-dynamic": "^8.0.0",
-    "@angular/router": "^8.0.0",
+    "@angular/animations": "^9.1.13",
+    "@angular/common": "^9.1.13",
+    "@angular/compiler": "^9.1.13",
+    "@angular/core": "^9.1.13",
+    "@angular/forms": "^9.1.13",
+    "@angular/platform-browser": "^9.1.13",
+    "@angular/platform-browser-dynamic": "^9.1.13",
+    "@angular/router": "^9.1.13",
     "bootstrap": "3.3.7",
     "core-js": "^3.1.2",
     "firebase": "^7",
     "rxjs": "^6.0.0",
     "tslib": "^1.9.0",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.10.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.800.0",
-    "@angular/cli": "^8.0.0",
-    "@angular/compiler-cli": "^8.0.0",
-    "@angular/language-service": "^8.0.0",
+    "@angular-devkit/build-angular": "~0.901.15",
+    "@angular/cli": "^9.1.15",
+    "@angular/compiler-cli": "^9.1.13",
+    "@angular/language-service": "^9.1.13",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
@@ -45,6 +45,6 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "3.4.5"
+    "typescript": "3.8.3"
   }
 }
