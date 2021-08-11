@@ -24,6 +24,8 @@ import { StartRecipeComponent } from './start-recipe/start-recipe.component';
         ReactiveFormsModule,
         RecipesRoutingModule,
         SharedModule
+    ],
+    exports:[
     ]
 })
 export class RecipesModule {

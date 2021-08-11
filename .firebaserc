@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "ng-recipee-shopping": {
+      "hosting": {
+        "recipee-shopping-app": [
+          "ng-recipee-shopping"
+        ]
+      }
+    }
+  }
+}

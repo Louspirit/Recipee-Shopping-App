@@ -10,7 +10,11 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner/loadi
     ],
     exports: [
         CommonModule,
-        DropDownDirective
+        DropDownDirective,
+        LoadingSpinnerComponent
+    ],
+    imports: [
+        CommonModule
     ]
 })
 export class SharedModule {}
