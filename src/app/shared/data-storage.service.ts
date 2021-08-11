@@ -1,26 +1,23 @@
-import { Injectable } from "../../../node_modules/@angular/core";
-import { RecipeService } from "../recipes/recipe.service";
-import { map } from "rxjs/operators";
-import { Recipe } from "../recipes/recipe.model";
-import { AuthService } from "../auth/auth.service";
-import { HttpClient } from "@angular/common/http";
+import { RecipeService } from '../recipes/recipe.service';
+import { map } from 'rxjs/operators';
+import { Recipe } from '../recipes/recipe.model';
+import { AuthService } from '../auth/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-@Injectable()
-export class DataStorageService{
+@Injectable({ providedIn: 'root' })
+export class DataStorageService {
     urlBackend = 'https://ng-recipee-shopping.firebaseio.com/';
-    constructor(private http: HttpClient, private recipeService: RecipeService, private authService: AuthService){
-        
+    constructor(private http: HttpClient, private recipeService: RecipeService, private authService: AuthService) {
+
     }
 
-    storeRecipes(){
-        const token = this.authService.getToken();
-        return this.http.put(this.urlBackend+'recipes.json?auth='+token, this.recipeService.getRecipes());
+    storeRecipes() {
+        return this.http.put(this.urlBackend + 'recipes.json', this.recipeService.getRecipes());
     }
 
-    fetchRecipes(){
-        const token = this.authService.getToken();
-
-        return this.http.get<Recipe[]>(this.urlBackend+'recipes.json?auth='+token).pipe(
+    fetchRecipes() {
+        return this.http.get<Recipe[]>(this.urlBackend + 'recipes.json').pipe(
             map(recipes => {
               return recipes.map( recipe => {
                 return {

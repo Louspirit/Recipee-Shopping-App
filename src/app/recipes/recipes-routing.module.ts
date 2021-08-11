@@ -10,11 +10,10 @@ import { RecipesResolverService } from './recipes-resolver.service';
 const recipeRoutes: Routes = [
     { path: '', component: RecipesComponent, children : [
         { path: '', component: StartRecipeComponent },
-        //Order is important otherwise new could be interprated as an id
+        // Order is important otherwise new could be interprated as an id
         { path: 'new', component: RecipeEditComponent, canActivate: [AuthGuard]},
-        { path: ':id', component: RecipeDetailComponent, resolve:[RecipesResolverService] },
-        //{ path: ':name', component: RecipeDetailComponent, resolve: {recipe: RecipeResolver} }
-        { path: ':id/edit', component: RecipeEditComponent, canActivate: [AuthGuard], resolve:[RecipesResolverService] }
+        { path: ':id', component: RecipeDetailComponent, resolve: [RecipesResolverService] },
+        { path: ':id/edit', component: RecipeEditComponent, canActivate: [AuthGuard], resolve: [RecipesResolverService] }
     ] },
 ];
 

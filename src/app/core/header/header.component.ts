@@ -1,3 +1,4 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { Recipe } from '../../recipes/recipe.model';
@@ -9,15 +10,13 @@ import { DataStorageService } from '../../shared/data-storage.service';
     templateUrl: './header.component.html'
 })
 export class HeaderComponent {
-    constructor(private dsService: DataStorageService, private recipeService: RecipeService, private authService: AuthService) {}
+    isAuthenticated = false;
 
-    isAuthenticated() {
-        return this.authService.isAuthenticaded();
-    }
+    constructor(private dsService: DataStorageService, private recipeService: RecipeService, private authService: AuthService) {}
 
     onSaveData() {
        this.dsService.storeRecipes().subscribe(
-           (response: Response) => {
+           (response: any) => {
                console.log(response);
            }
        );

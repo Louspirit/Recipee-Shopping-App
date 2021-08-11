@@ -10,12 +10,12 @@ export class AppComponent implements OnInit {
   title = 'app';
  // loadedFeature: string = 'recipe';
 
-ngOnInit(){
-  //Set up the credentials
-  firebase.initializeApp({
-    apiKey: "AIzaSyDsdURyol791MsRThnGwKI95U029PqtFgc",
-    authDomain: "ng-recipee-shopping.firebaseapp.com"
-  })
+ngOnInit() {
+  // Set up the credentials
+  // firebase.initializeApp({
+  //   apiKey: "AIzaSyDsdURyol791MsRThnGwKI95U029PqtFgc",
+  //   authDomain: "ng-recipee-shopping.firebaseapp.com"
+  // })
 }
  // Replaced with router handler
   // onNavigation(navigationInfo:{page: string}){

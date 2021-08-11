@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { auth } from 'firebase';
+// import { auth } from 'firebase';
 import { NgForm } from '../../../../node_modules/@angular/forms';
 import { AuthService } from '../auth.service';
 
@@ -9,7 +9,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  private isLoading: false;
+  private isLoading = false;
 
   constructor(private authService: AuthService) {
 
@@ -18,12 +18,12 @@ export class SignupComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSignup(form: NgForm){
+  onSignup(form: NgForm) {
     const email = form.value.email;
     const password = form.value.password;
-    this.authService.signupUser(email,password);
+    this.authService.signupUser(email, password);
     form.reset();
-    
+
   }
 
 }

@@ -11,8 +11,8 @@ import { Subscription } from '../../../../node_modules/rxjs';
 })
 export class RecipeListComponent implements OnInit, OnDestroy {
   
-  recipes: Recipe[];
-  subscription: Subscription;
+  recipes!: Recipe[];
+  subscription: Subscription=new Subscription();
   constructor(private recipeService: RecipeService) { }
 
   ngOnInit() {
