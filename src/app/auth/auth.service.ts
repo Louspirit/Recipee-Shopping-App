@@ -3,71 +3,23 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 // import { User } from 'firebase/auth/User';
 import * as firebase from 'firebase';
-import { throwError } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { User } from './user.model';
 // import { UserCredential } from firebase.auth.UserCredential;
 
 @Injectable({ providedIn: 'root' })
 export class AuthService implements OnInit {
     private tokenExpirationTimer: any;
+    public userSubject = new BehaviorSubject<User|undefined>(undefined);
     constructor(private router: Router, public fireAuth: AngularFireAuth) {
 
     }
 
     public ngOnInit() {
-        // this.fireAuth.user.subscribe(() => {
-        //     (user: User) => {
-        //         this.handleAuthentication2(user);
-        //     };
-        // });
     }
 
     signupUser(email: string, password: string) {
-        this.fireAuth.createUserWithEmailAndPassword(email, password)
-        .then(
-            (resData: firebase.default.auth.UserCredential) => {
-                if (resData!! && resData.user?.email!! && resData.user?.uid!!) {
-                    resData.user?.getIdToken().then(
-                        idToken => {
-                            resData.user?.getIdTokenResult().then(
-                                tokenResult => {
-                                    this.handleAuthentication(
-                                        (resData.user?.email) as string,
-                                        (resData.user?.uid) as string,
-                                        idToken,
-                                        new Date(tokenResult.expirationTime).getTime() - new Date().getTime()
-                                    );
-                                }
-                                );
-                            }
-                    );
-                } else {
-                    throwError('User not recovered!');
-                }
-            }
-        ).catch(
-            (error) => { console.log(error); }
-        );
-        // .catch(
-        //     (error: any) => console.log(error)
-        // );
-        // .then(
-        //     resData => {
-        //         this.handleAuthentication(
-        //             resData.email,
-        //             resData.localId,
-        //             resData.idToken,
-        //             +resData.expiresIn
-        //         );
-        //     });
-        // return firebase.auth().createUserWithEmailAndPassword(email, password)
-        //     .catch(
-        //         error => console.log(error)
-        //     );
-    }
-
-    signinUser(email: string, password: string) {
-        this.fireAuth.signInWithEmailAndPassword(email, password)
+        return this.fireAuth.createUserWithEmailAndPassword(email, password)
             .then(
                 (resData: firebase.default.auth.UserCredential) => {
                     if (resData!! && resData.user?.email!! && resData.user?.uid!!) {
@@ -82,8 +34,36 @@ export class AuthService implements OnInit {
                                             new Date(tokenResult.expirationTime).getTime() - new Date().getTime()
                                         );
                                     }
-                                    );
-                                }
+                                );
+                            }
+                        );
+                    } else {
+                        throwError('User not recovered!');
+                    }
+                }
+            ).catch(
+                (error) => { console.log(error); }
+            );
+    }
+
+    signinUser(email: string, password: string) {
+        return this.fireAuth.signInWithEmailAndPassword(email, password)
+            .then(
+                (resData: firebase.default.auth.UserCredential) => {
+                    if (resData!! && resData.user?.email!! && resData.user?.uid!!) {
+                        resData.user?.getIdToken().then(
+                            idToken => {
+                                resData.user?.getIdTokenResult().then(
+                                    tokenResult => {
+                                        this.handleAuthentication(
+                                            (resData.user?.email) as string,
+                                            (resData.user?.uid) as string,
+                                            idToken,
+                                            new Date(tokenResult.expirationTime).getTime() - new Date().getTime()
+                                        );
+                                    }
+                                );
+                            }
                         );
                     } else {
                         throwError('User not recovered!');
@@ -95,33 +75,21 @@ export class AuthService implements OnInit {
 
     }
 
-    private autoLogout(expirationDuration: number ) {
+    private autoLogout(expirationDuration: number) {
         this.tokenExpirationTimer = setTimeout(() => {
             this.logout();
         }, expirationDuration);
     }
-
-    // private handleAuthentication2(userLoggedIn: User) {
-
-    //     let expirationDate: string;
-    //     userLoggedIn.getIdTokenResult().then(
-    //         (tokenResult: any) => {
-    //             expirationDate = tokenResult.expirationTime;
-    //             const expiresIn = new Date().getTime() + new Date(expirationDate).getTime();
-
-    //             this.autoLogout(expiresIn);
-    //             localStorage.setItem('userData', JSON.stringify(userLoggedIn));
-    //         });
-    // }
 
     private handleAuthentication(
         email: string,
         userId: string,
         token: string,
         expiresIn: number
-     ) {
+    ) {
         const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
         const user = new User(email, userId, token, expirationDate);
+        this.userSubject.next(user);
         this.autoLogout(expiresIn * 1000);
         localStorage.setItem('userData', JSON.stringify(user));
     }
