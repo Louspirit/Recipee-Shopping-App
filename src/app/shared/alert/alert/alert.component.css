@@ -2,7 +2,7 @@
     position: fixed;
     top:0;
     left: 0;
-    width: 10vW;
+    width: 100vW;
     height: 100vh;
     background: rgba(0,0,0,0.75);
     z-index:50;
