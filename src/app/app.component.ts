@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,16 +9,13 @@ import * as firebase from 'firebase';
 })
 export class AppComponent implements OnInit {
   title = 'app';
- // loadedFeature: string = 'recipe';
+  // loadedFeature: string = 'recipe';
+  constructor(private authService: AuthService) { }
 
-ngOnInit() {
-  // Set up the credentials
-  // firebase.initializeApp({
-  //   apiKey: "AIzaSyDsdURyol791MsRThnGwKI95U029PqtFgc",
-  //   authDomain: "ng-recipee-shopping.firebaseapp.com"
-  // })
-}
- // Replaced with router handler
+  ngOnInit() {
+    this.authService.autoLogin();
+  }
+  // Replaced with router handler
   // onNavigation(navigationInfo:{page: string}){
   //   this.loadedFeature=navigationInfo.page;
   // }

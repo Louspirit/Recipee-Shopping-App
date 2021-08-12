@@ -31,7 +31,7 @@ export class AuthService implements OnInit {
                                             (resData.user?.email) as string,
                                             (resData.user?.uid) as string,
                                             idToken,
-                                            new Date(tokenResult.expirationTime).getTime() - new Date().getTime()
+                                            new Date(tokenResult.expirationTime)
                                         );
                                     }
                                 );
@@ -59,7 +59,7 @@ export class AuthService implements OnInit {
                                             (resData.user?.email) as string,
                                             (resData.user?.uid) as string,
                                             idToken,
-                                            new Date(tokenResult.expirationTime).getTime() - new Date().getTime()
+                                            new Date(tokenResult.expirationTime)
                                         );
                                     }
                                 );
@@ -85,12 +85,12 @@ export class AuthService implements OnInit {
         email: string,
         userId: string,
         token: string,
-        expiresIn: number
+        expirationDate: Date
     ) {
-        const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
         const user = new User(email, userId, token, expirationDate);
         this.userSubject.next(user);
-        this.autoLogout(expiresIn * 1000);
+        const expiresIn = expirationDate.getTime() - new Date().getTime();
+        this.autoLogout(expiresIn * 1);
         localStorage.setItem('userData', JSON.stringify(user));
     }
 
@@ -113,9 +113,40 @@ export class AuthService implements OnInit {
     //     return throwError(errorMessage);
     // }
 
-    public logout() {
-        this.fireAuth.signOut().catch((error: any) => { console.log(error); });
-        // to not stay in authorized-only page
-        this.router.navigate(['']);
+    autoLogin() {
+        const userDataLocalStorage = localStorage.getItem('userData');
+        if (!!userDataLocalStorage ) {
+            const userData = JSON.parse(userDataLocalStorage);
+            if (!userData) {
+              return;
+            }
+            const loadedUser = new User(
+                userData.email,
+                userData.id,
+                userData._token,
+                new Date(userData._tokenExpirationDate)
+                );
+
+                if (loadedUser.token) {
+                    this.userSubject.next(loadedUser);
+                    const expirationDuration =
+                    new Date(userData._tokenExpirationDate).getTime() -
+                    new Date().getTime();
+                    this.autoLogout(expirationDuration);
+                }
+           } else {
+               return;
+           }
     }
+
+    public logout() {
+        this.userSubject.next(undefined);
+        this.router.navigate(['/auth']);
+        localStorage.removeItem('userData');
+        if (this.tokenExpirationTimer) {
+          clearTimeout(this.tokenExpirationTimer);
+        }
+        this.tokenExpirationTimer = null;
+    }
+
 }
