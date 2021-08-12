@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { User } from './user.model';
+
 // import { UserCredential } from firebase.auth.UserCredential;
 
 @Injectable({ providedIn: 'root' })
@@ -24,11 +25,11 @@ export class AuthService implements OnInit {
             .then(
                 (resData: firebase.default.auth.UserCredential) => {
                     if (resData!! && resData.user?.email!! && resData.user?.uid!!) {
-                        resData.user?.getIdToken().then(
-                            idToken => {
-                                resData.user?.getIdTokenResult().then(
-                                    tokenResult => {
-                                        this.handleAuthentication(
+                        return resData.user?.getIdToken().then(
+                            (idToken: any) => {
+                                return resData.user?.getIdTokenResult().then(
+                                    (tokenResult: any) => {
+                                        return this.handleAuthentication(
                                             (resData.user?.email) as string,
                                             (resData.user?.uid) as string,
                                             idToken,
@@ -39,13 +40,13 @@ export class AuthService implements OnInit {
                             }
                         );
                     } else {
-                        throwError('User not recovered!');
+                       throw new Error('User not recovered!');
                     }
                 }
             ).catch(
                 (error) => {
                     console.error(error);
-                    this.handleError(error);
+                    return this.handleError(error);
                 }
             );
     }
@@ -56,10 +57,10 @@ export class AuthService implements OnInit {
                 (resData: firebase.default.auth.UserCredential) => {
                     if (resData!! && resData.user?.email!! && resData.user?.uid!!) {
                         resData.user?.getIdToken().then(
-                            idToken => {
+                            (idToken: any) => {
                                 resData.user?.getIdTokenResult().then(
-                                    tokenResult => {
-                                        this.handleAuthentication(
+                                    (tokenResult: any) => {
+                                        return this.handleAuthentication(
                                             (resData.user?.email) as string,
                                             (resData.user?.uid) as string,
                                             idToken,
@@ -70,13 +71,13 @@ export class AuthService implements OnInit {
                             }
                         );
                     } else {
-                        throwError('User not recovered!');
+                        throw new Error('User not recovered!');
                     }
                 }
             ).catch(
                 (error) => {
                     console.error(error);
-                    this.handleError(error);
+                    return this.handleError(error);
                 }
             );
 
@@ -101,23 +102,23 @@ export class AuthService implements OnInit {
         localStorage.setItem('userData', JSON.stringify(user));
     }
 
-    private handleError(errorRes: HttpErrorResponse) {
+    private handleError(errorRes: firebase.default.auth.Error) {
         let errorMessage = 'An unknown error occurred!';
-        if (!errorRes.error || !errorRes.error.error) {
-            return throwError(errorMessage);
+        if (!errorRes.code || !errorRes.message) {
+            throw new Error(errorMessage);
         }
-        switch (errorRes.error.error.message) {
+        switch (errorRes.code) {
             case 'EMAIL_EXISTS':
                 errorMessage = 'This email exists already';
                 break;
             case 'EMAIL_NOT_FOUND':
                 errorMessage = 'This email does not exist.';
                 break;
-            case 'INVALID_PASSWORD':
+            case 'auth/wrong-password':
                 errorMessage = 'This password is not correct.';
                 break;
         }
-        return throwError(errorMessage);
+        throw new Error(errorMessage);
     }
 
     autoLogin() {
