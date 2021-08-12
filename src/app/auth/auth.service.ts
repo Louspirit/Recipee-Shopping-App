@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
@@ -10,7 +11,7 @@ import { User } from './user.model';
 @Injectable({ providedIn: 'root' })
 export class AuthService implements OnInit {
     private tokenExpirationTimer: any;
-    public userSubject = new BehaviorSubject<User|undefined>(undefined);
+    public userSubject = new BehaviorSubject<User | undefined>(undefined);
     constructor(private router: Router, public fireAuth: AngularFireAuth) {
 
     }
@@ -42,7 +43,10 @@ export class AuthService implements OnInit {
                     }
                 }
             ).catch(
-                (error) => { console.log(error); }
+                (error) => {
+                    console.error(error);
+                    this.handleError(error);
+                }
             );
     }
 
@@ -70,7 +74,10 @@ export class AuthService implements OnInit {
                     }
                 }
             ).catch(
-                (error) => { console.log(error); }
+                (error) => {
+                    console.error(error);
+                    this.handleError(error);
+                }
             );
 
     }
@@ -94,49 +101,49 @@ export class AuthService implements OnInit {
         localStorage.setItem('userData', JSON.stringify(user));
     }
 
-    // private handleError(errorRes: HttpErrorResponse); {
-    //     let errorMessage = 'An unknown error occurred!';
-    //     if (!errorRes.error || !errorRes.error.error) {
-    //         return throwError(errorMessage);
-    //     }
-    //     switch (errorRes.error.error.message) {
-    //         case 'EMAIL_EXISTS':
-    //             errorMessage = 'This email exists already';
-    //             break;
-    //         case 'EMAIL_NOT_FOUND':
-    //             errorMessage = 'This email does not exist.';
-    //             break;
-    //         case 'INVALID_PASSWORD':
-    //             errorMessage = 'This password is not correct.';
-    //             break;
-    //     }
-    //     return throwError(errorMessage);
-    // }
+    private handleError(errorRes: HttpErrorResponse) {
+        let errorMessage = 'An unknown error occurred!';
+        if (!errorRes.error || !errorRes.error.error) {
+            return throwError(errorMessage);
+        }
+        switch (errorRes.error.error.message) {
+            case 'EMAIL_EXISTS':
+                errorMessage = 'This email exists already';
+                break;
+            case 'EMAIL_NOT_FOUND':
+                errorMessage = 'This email does not exist.';
+                break;
+            case 'INVALID_PASSWORD':
+                errorMessage = 'This password is not correct.';
+                break;
+        }
+        return throwError(errorMessage);
+    }
 
     autoLogin() {
         const userDataLocalStorage = localStorage.getItem('userData');
-        if (!!userDataLocalStorage ) {
+        if (!!userDataLocalStorage) {
             const userData = JSON.parse(userDataLocalStorage);
             if (!userData) {
-              return;
+                return;
             }
             const loadedUser = new User(
                 userData.email,
                 userData.id,
                 userData._token,
                 new Date(userData._tokenExpirationDate)
-                );
+            );
 
-                if (loadedUser.token) {
-                    this.userSubject.next(loadedUser);
-                    const expirationDuration =
+            if (loadedUser.token) {
+                this.userSubject.next(loadedUser);
+                const expirationDuration =
                     new Date(userData._tokenExpirationDate).getTime() -
                     new Date().getTime();
-                    this.autoLogout(expirationDuration);
-                }
-           } else {
-               return;
-           }
+                this.autoLogout(expirationDuration);
+            }
+        } else {
+            return;
+        }
     }
 
     public logout() {
@@ -144,7 +151,7 @@ export class AuthService implements OnInit {
         this.router.navigate(['/auth']);
         localStorage.removeItem('userData');
         if (this.tokenExpirationTimer) {
-          clearTimeout(this.tokenExpirationTimer);
+            clearTimeout(this.tokenExpirationTimer);
         }
         this.tokenExpirationTimer = null;
     }
