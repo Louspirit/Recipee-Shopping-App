@@ -1,0 +1,91 @@
+[33mcommit 3f8ca4c39f92f645797fd5555d670a458f3ac21e[m[33m ([m[1;36mHEAD -> [m[1;32mdynamic-components[m[33m)[m
+Author: MSI-MineoGames <admin@mineogames.com>
+Date:   Thu Aug 12 12:06:32 2021 +0200
+
+    Init dynamic component
+    
+    alert component for errors
+
+[33mcommit c1591e219ecae7d525d90e3b3693dc9d3085e66e[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+Author: MSI-MineoGames <admin@mineogames.com>
+Date:   Thu Aug 12 11:27:53 2021 +0200
+
+    auth: auto login & auto log out
+
+[33mcommit fc8cf41a794bbf61a3892d633a419bda70d48113[m
+Author: MSI-MineoGames <admin@mineogames.com>
+Date:   Thu Aug 12 10:54:00 2021 +0200
+
+    fix: access to recipes page
+    
+    AuthGuard had no provider
+    Use of authComponent instead of signin and signup
+    Updated header
+
+[33mcommit 0700708f3fac6a4b0d7e83ee14295d65e15ec70e[m
+Author: MSI-MineoGames <admin@mineogames.com>
+Date:   Thu Aug 12 10:34:24 2021 +0200
+
+    fix tslib error
+
+[33mcommit d6c49d1c97d1aae23082797fb84a9b911c438e60[m
+Author: MSI-MineoGames <admin@mineogames.com>
+Date:   Thu Aug 12 10:28:39 2021 +0200
+
+    Allow debug
+    
+    start of authent
+
+[33mcommit dde95e17ca54e8a6f85ae3862562c5e74391da50[m
+Merge: 182568f 44cd3ce
+Author: MSI-MineoGames <admin@mineogames.com>
+Date:   Wed Aug 11 18:45:26 2021 +0200
+
+    Merge branch 'main' into migration-angular-6
+
+[33mcommit 44cd3ceaaa9374bfeee88daf1416da4bfa94deb1[m
+Author: MSI-MineoGames <admin@mineogames.com>
+Date:   Wed Aug 11 18:41:55 2021 +0200
+
+    Migrated to Angular 12 and firebase ok
+    
+    Fix import problems
+    Use of latest firebase
+
+[33mcommit 885f60341bdcd7318bcb6840e355f467b94245f0[m
+Author: MSI-MineoGames <admin@mineogames.com>
+Date:   Tue Aug 10 11:19:00 2021 +0200
+
+    Migration Angular 10 to 11
+
+[33mcommit a13f097831c67315f3df81c9e4bd2541799566de[m
+Author: MSI-MineoGames <admin@mineogames.com>
+Date:   Tue Aug 10 11:02:26 2021 +0200
+
+    Migration angular 9 vers 10
+
+[33mcommit 182568fdfad8d3865ba5f766770ff2844bb3822c[m
+Author: MSI-MineoGames <admin@mineogames.com>
+Date:   Tue Aug 10 10:36:21 2021 +0200
+
+    Migrate angular 6 to 7
+
+[33mcommit 9780b9d3cc7848559e963c8cd72107d7e73468cd[m
+Author: MSI-MineoGames <admin@mineogames.com>
+Date:   Tue Aug 10 10:24:07 2021 +0200
+
+    Use correct repo name in angular conf
+
+[33mcommit 8a51896efc3b8971ab9da9fb6b08ed9e2c6b3f5c[m
+Author: MSI-MineoGames <admin@mineogames.com>
+Date:   Tue Aug 10 10:08:17 2021 +0200
+
+    First commit
+    
+    Angular 8 app
+
+[33mcommit f744f58c59c0626efad6f1d12cf89ae4e3528936[m
+Author: Guillaume ESCARIEUX <escarieux.guillaume@cgi.com>
+Date:   Wed May 30 14:50:15 2018 +0200
+
+    initial commit
