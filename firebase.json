@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "Y",
+    "public": "dist/recipee-shopping-app",
     "ignore": [
       "firebase.json",
       "**/.*",
