@@ -1,10 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { FormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { SharedModule } from '../shared/shared.module';
-import { AuthInterceptorService } from './auth-interceptor.service';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { SigninComponent } from './signin/signin.component';
