@@ -25,7 +25,7 @@ import { StartRecipeComponent } from './start-recipe/start-recipe.component';
         RecipesRoutingModule,
         SharedModule
     ],
-    exports:[
+    exports: [
     ]
 })
 export class RecipesModule {
